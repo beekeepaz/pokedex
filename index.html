@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>poketmon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <input id="search" placeholder="search specific pokemon">
+        <button onclick="init()">Load one of the best games ever exist</button>
+        <select id="pokemonDropdown" onchange="init()">
+            <option value="" disabled selected>Select a Pokémon</option>
+        </select>
+    </header>
+
+    <section>
+        <div id='load_pokemon'></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

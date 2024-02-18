@@ -1,0 +1,86 @@
+body {
+    background-color: rgb(136, 43, 43);
+    color: rgb(179, 145, 53);
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-bottom: 1px solid;
+    box-shadow: 16px;
+    border-color: rgb(179, 145, 53);
+    background-color: rgb(136, 43, 43);
+    color: rgb(179, 145, 53);
+    height: 200px;
+    width: 100%;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+#load_pokemon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.show_container {
+    margin: 16px;
+    padding: 8px;
+    background-color: rgb(233, 233, 160);
+    border-radius: 8px;
+    width: 180px;
+}
+
+button {
+    padding: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    background-color: rgb(75, 43, 136);
+    color: rgb(179, 145, 53); 
+    border-color: rgb(179, 145, 53);
+    border: none;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: rgb(121, 91, 175);
+    cursor: pointer;
+}
+
+input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(75, 43, 136);
+    color: rgb(179, 145, 53);
+    border-radius: 8px;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+}
+
+select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(75, 43, 136);
+    color: rgb(179, 145, 53);
+    border-radius: 8px;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+}
+
+select:hover {
+    cursor: pointer;
+}
+
