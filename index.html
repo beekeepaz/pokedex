@@ -8,17 +8,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="init()">
     <header>
-        <input id="search" placeholder="search specific pokemon">
-        <button onclick="init()">Load one of the best games ever exist</button>
-        <select id="pokemonDropdown" onchange="init()">
-            <option value="" disabled selected>Select a Pokémon</option>
-        </select>
     </header>
 
     <section>
         <div id='load_pokemon'></div>
+        <div id='load_button'></div>
     </section>
 
     <script src="script.js"></script>

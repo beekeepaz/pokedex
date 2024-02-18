@@ -17,11 +17,16 @@ header {
     color: rgb(179, 145, 53);
     height: 200px;
     width: 100%;
+    position: fixed;
 }
 
 section {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-top: 200px;
 }
 
 #load_pokemon {
@@ -84,3 +89,7 @@ select:hover {
     cursor: pointer;
 }
 
+img {
+    width: 128px;
+    height: 128px;
+}

@@ -1,115 +1,108 @@
-const firstGenPokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie', 'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey', 'pidgeotto', 'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu', 'sandshrew', 'sandslash', 'nidoran-f', 'nidorina', 'nidoqueen', 'nidoran-m', 'nidorino', 'nidoking', 'clefairy', 'clefable', 'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish', 'gloom', 'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth', 'persian', 'psyduck', 'golduck', 'mankey', 'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl', 'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp', 'bellsprout', 'weepinbell', 'victreebel', 'tentacool', 'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash', 'slowpoke', 'slowbro', 'magnemite', 'magneton', 'farfetchd' , 'doduo', 'dodrio', 'seel', 'dewgong', 'grimer', 'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno', 'krabby', 'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak', 'hitmonlee', 'hitmonchan', 'lickitung', 'koffing', 'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan', 'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie', 'mr-mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir', 'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee', 'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl', 'snorlax', 'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew'];
+const firstGenPokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie', 'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey', 'pidgeotto', 'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu', 'sandshrew', 'sandslash', 'nidoran-f', 'nidorina', 'nidoqueen', 'nidoran-m', 'nidorino', 'nidoking', 'clefairy', 'clefable', 'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish', 'gloom', 'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth', 'persian', 'psyduck', 'golduck', 'mankey', 'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl', 'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp', 'bellsprout', 'weepinbell', 'victreebel', 'tentacool', 'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash', 'slowpoke', 'slowbro', 'magnemite', 'magneton', 'farfetchd', 'doduo', 'dodrio', 'seel', 'dewgong', 'grimer', 'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno', 'krabby', 'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak', 'hitmonlee', 'hitmonchan', 'lickitung', 'koffing', 'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan', 'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie', 'mr-mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir', 'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee', 'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl', 'snorlax', 'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew'];
 
-const dropdown = document.getElementById("pokemonDropdown");
+let responseAsJson;
 
-function getDropDown() {
-    const selectedPokemon = dropdown.value.toLowerCase();
-    return selectedPokemon;
-}
-
-firstGenPokemon.forEach(pokemon => {
-    const option = document.createElement("option");
-    option.text = pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
-    dropdown.add(option);
-  });
+let currentIndex = 0;
 
 async function init() {
     await collectAll();
 }
 
 async function collectAll() {
-    document.getElementById('load_pokemon').innerHTML = '';
-    // let idname = getValueFromSearch() || getDropDown();
-    // let url = `https://pokeapi.co/api/v2/pokemon/${idname}`;
-    // let response = await fetch(url);
-    // let responseAsJson = await response.json();
-    // console.log(responseAsJson);
-
-    // let namepokemon = responseAsJson['name'];
-    // let imagepokemon = responseAsJson['sprites']['front_shiny'];
-    // showName(namepokemon, imagepokemon);
-
-    // let allurl = `https://pokeapi.co/api/v2/pokemon/`;
-    // let allresponse = await fetch(allurl);
-    // let allResponseAsJson = await allresponse.json();
-    // console.log(allResponseAsJson);
-
-    // for (let i = 0; i < allResponseAsJson['results'].length; i++) {
-    //     const collect = allResponseAsJson['results'][i];
-    //     let getname = collect['name'];
-
-
-    for (let u = 0; u < firstGenPokemon.length; u++) {
-        const getelementname = firstGenPokemon[u];
-        
-        await collectAllName(getelementname);
+    const maxPokemonCount = Math.min(firstGenPokemon.length - currentIndex, 20);
+    if (maxPokemonCount <= 0) {
+        alert("Thats All");
+        return;
     }
 
-        // for (let j = 0; j < getname['name'].length; j++) {
-        //     const collectimage = getname['name'][j];
-        //     let getimage = collectimage['front_shiny'];
+    for (let u = 0; u < maxPokemonCount; u++) {
+        const getelementname = firstGenPokemon[currentIndex + u];
+        await collectAllName(getelementname, currentIndex + u);
+    }
 
-            // showAllName(getname, getimage);
-        }
-    
-    // let imageallpokemon = allResponseAsJson['sprites']['front_shiny'];
+    currentIndex += maxPokemonCount;
+}
 
-async function collectAllName(getname) {
-    // let idname = getValueFromSearch() || getDropDown();
+async function collectAllName(getname, id) {
     let url = `https://pokeapi.co/api/v2/pokemon/${getname}`;
     let response = await fetch(url);
-    let responseAsJson = await response.json();
-    console.log(responseAsJson);
-
-    let namepokemon = responseAsJson['name'];   
-    let imagepokemon = responseAsJson['sprites']['front_shiny'];
-    showName(namepokemon, imagepokemon);
+    responseAsJson = await response.json();
+    showName(id);
 }
 
-
-function showAllName(nameallpokemon, getimage) {
-    let showall = document.getElementById('load_pokemon');
-
-    showall.innerHTML +=`
-    <div class="show_container">
-        <h2>${nameallpokemon}</h2>
-        <img src="${getimage}">
-    </div>
-`;
+function showName(id) {
+    const cardHTML = createHtmlCard(id);
+    const cardButton = createButton();
+    showCards(cardHTML);
+    showButton(cardButton);
+    document.getElementById(`name${id}`).innerText = getSelectName();
+    document.getElementById(`pictures${id}`).src = getSelectPictures();
+    document.getElementById(`typeone${id}`).innerText = getSelectTypeOne();
+    document.getElementById(`Id${id}`).innerText = getSelectId();
+    const typeTwoElement = document.getElementById(`typetwo${id}`);
+    checkTypeTwo(id, typeTwoElement);
 }
 
-function showName(namepokemon, imagepokemon){
-    let loadname = document.getElementById('load_pokemon');
+function checkTypeTwo(id, typeTwoElement) {
+    const typeTwo = getSelectTypeTwo();
+    if (typeTwo) {
+        typeTwoElement.innerText = typeTwo;
+    } else {
+        typeTwoElement.style.display = 'none';
+    }
+}
 
-    loadname.innerHTML +=`
+function createHtmlCard(id) {
+    return `
         <div class="show_container">
-            <h2>${namepokemon}</h2>
-            <img src="${imagepokemon}">
+            <h2 id="name${id}"></h2>
+            <img id="pictures${id}">
+            <span id="typeone${id}"></span>
+            <span id="typetwo${id}"></span>
+            <span id="Id${id}"></span>
         </div>
     `;
 }
 
-function getValueFromInput(valueindex) {
-    let inputvalue = document.getElementById(`${valueindex}`).value;
-    return inputvalue;
+function createButton() {
+    return `
+        <div>
+            <button onclick="init()">Load one of the best games ever exist</button>
+        </div>
+    `;
 }
 
-function getValueFromSearch() {
-    let searchvalue = getValueFromInput('search');
-    return searchvalue;
+
+function showCards(cardHTML) {
+    const showallcards = document.getElementById('load_pokemon');
+    showallcards.innerHTML += cardHTML;
 }
 
-// function getIdfromTag(tagindex) {
-//     let tagid = document.getElementById(`${tagindex}`);
-//     return tagid;
-// }
+function showButton(cardButton) {
+    const getplacebutton = document.getElementById('load_button');
+    getplacebutton.innerHTML = cardButton;
+}
 
-// function getIdfromImage() {
-//     let image = getIdfromTag('load_image');
-//     return image;
-// }
+function getSelectName() {
+    return responseAsJson['name'];
+}
 
-// function catchThemAll() {
-//     let search = getValueFromSearch();
-    
-// }
+function getSelectPictures() {
+    return responseAsJson['sprites']['other']['dream_world']['front_default'];
+}
+
+function getSelectTypeOne() {
+    return responseAsJson['types'][0]['type']['name'];
+}
+
+function getSelectTypeTwo() {
+    if (responseAsJson['types'].length >= 2) {
+        return responseAsJson['types'][1]['type']['name'];
+    } else {
+        return null;
+    }
+}
+
+function getSelectId() {
+    return responseAsJson['id'];
+}
