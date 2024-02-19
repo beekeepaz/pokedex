@@ -27,12 +27,12 @@ async function collectAllName(getname, id) {
     let url = `https://pokeapi.co/api/v2/pokemon/${getname}`;
     let response = await fetch(url);
     responseAsJson = await response.json();
-    showName(id);
+    informationCards(id);
 }
 
-function showName(id) {
+function informationCards(id) {
     const cardHTML = createHtmlCard(id);
-    const cardButton = createButton();
+    const cardButton = createHtmlButton();
     showCards(cardHTML);
     showButton(cardButton);
     document.getElementById(`name${id}`).innerText = getSelectName();
@@ -54,7 +54,7 @@ function checkTypeTwo(id, typeTwoElement) {
 
 function createHtmlCard(id) {
     return `
-        <div class="show_container">
+        <div onclick="getYourPokemon(${id})" class="show_container">
             <h2 id="name${id}"></h2>
             <img id="pictures${id}">
             <span id="typeone${id}"></span>
@@ -64,7 +64,7 @@ function createHtmlCard(id) {
     `;
 }
 
-function createButton() {
+function createHtmlButton() {
     return `
         <div>
             <button onclick="init()">Load one of the best games ever exist</button>
@@ -72,15 +72,76 @@ function createButton() {
     `;
 }
 
-
 function showCards(cardHTML) {
-    const showallcards = document.getElementById('load_pokemon');
-    showallcards.innerHTML += cardHTML;
+    const getplacecards = document.getElementById('load_pokemon');
+    getplacecards.innerHTML += cardHTML;
 }
 
 function showButton(cardButton) {
     const getplacebutton = document.getElementById('load_button');
     getplacebutton.innerHTML = cardButton;
+}
+
+function singlePokemonInfo(id) {
+    const cardSINGL = createHtmlSingle(id);
+    showSingleInfo(cardSINGL);
+    document.getElementById(`single_name${id}`).innerText = getSelectName();
+    document.getElementById(`single_pictures${id}`).src = getSelectPictures();
+    document.getElementById(`single_typeone${id}`).innerText = getSelectTypeOne();
+    document.getElementById(`single_id${id}`).innerText = getSelectId();
+}
+
+function createHtmlSingle(id) {
+    // document.getElementById('poketmon_data').innerHTML 
+    return `
+        <div class="show_container">
+            <h2 id="single_name${id}"></h2>
+            <img id="single_pictures${id}">
+            <span id="single_typeone${id}"></span>
+            <span id="single_id${id}"></span>
+        </div>
+        <i onclick="closeInformationCard()" class="close" tabindex="0" role="button">close</i>
+        <div class="arrows">
+            <i onclick="left(${id})" class="myButton left"></i>
+            <i onclick="right(${id})" class="myButton right"></i>
+        </div>
+    `;
+}
+
+function showSingleInfo(cardSINGL) {
+    const getplacesingle = document.getElementById('poketmon_data');
+    getplacesingle.innerHTML = cardSINGL;
+}
+
+function getYourPokemon(id) {
+    document.getElementById('one_pokemon').classList.remove('d-none');
+    document.getElementById('main_card').classList.add('p-fixed');
+    singlePokemonInfo(id);
+}
+
+function closeInformationCard() {
+    document.getElementById('one_pokemon').classList.add('d-none');
+    document.getElementById('main_card').classList.remove('p-fixed');
+}
+
+function left(id) {
+    if (id == 0) {
+        id = firstGenPokemon.length - 1;
+    }
+    else {
+        id--;
+    }
+    singlePokemonInfo(id);
+}
+
+function right(id) {
+    if (id == firstGenPokemon.length - 1) {
+        id = 0;
+    }
+    else {
+        id++;
+    }
+    singlePokemonInfo(id);
 }
 
 function getSelectName() {

@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload="init()">
+<body onload="init(), initia()">
     <header>
     </header>
 
-    <section>
+    <section id='main_card' class="main-card">
         <div id='load_pokemon'></div>
         <div id='load_button'></div>
+    </section>
+
+    <section id="one_pokemon" class="d-none">
+        <div class="information-card" id="poketmon_data">
+        </div>
     </section>
 
     <script src="script.js"></script>
