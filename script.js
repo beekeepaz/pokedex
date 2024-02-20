@@ -1,7 +1,5 @@
 const firstGenPokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie', 'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey', 'pidgeotto', 'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu', 'sandshrew', 'sandslash', 'nidoran-f', 'nidorina', 'nidoqueen', 'nidoran-m', 'nidorino', 'nidoking', 'clefairy', 'clefable', 'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish', 'gloom', 'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth', 'persian', 'psyduck', 'golduck', 'mankey', 'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl', 'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp', 'bellsprout', 'weepinbell', 'victreebel', 'tentacool', 'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash', 'slowpoke', 'slowbro', 'magnemite', 'magneton', 'farfetchd', 'doduo', 'dodrio', 'seel', 'dewgong', 'grimer', 'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno', 'krabby', 'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak', 'hitmonlee', 'hitmonchan', 'lickitung', 'koffing', 'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan', 'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie', 'mr-mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir', 'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee', 'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl', 'snorlax', 'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew'];
-
-let responseAsJson;
-
+let pokemon = [];
 let currentIndex = 0;
 
 async function init() {
@@ -23,100 +21,76 @@ async function collectAll() {
     currentIndex += maxPokemonCount;
 }
 
-async function collectAllName(getname, id) {
+async function collectAllName(getname) {
     let url = `https://pokeapi.co/api/v2/pokemon/${getname}`;
     let response = await fetch(url);
-    responseAsJson = await response.json();
-    informationCards(id);
+    let responseAsJson = await response.json();
+    pokemon.push(responseAsJson);
+    renderData();
 }
 
-function informationCards(id) {
-    const cardHTML = createHtmlCard(id);
-    const cardButton = createHtmlButton();
-    showCards(cardHTML);
-    showButton(cardButton);
-    document.getElementById(`name${id}`).innerText = getSelectName();
-    document.getElementById(`pictures${id}`).src = getSelectPictures();
-    document.getElementById(`typeone${id}`).innerText = getSelectTypeOne();
-    document.getElementById(`Id${id}`).innerText = getSelectId();
-    const typeTwoElement = document.getElementById(`typetwo${id}`);
-    checkTypeTwo(id, typeTwoElement);
-}
+function renderData() {
+    let data = document.getElementById(`load_pokemon`);
+    data.innerHTML = ``;
 
-function checkTypeTwo(id, typeTwoElement) {
-    const typeTwo = getSelectTypeTwo();
-    if (typeTwo) {
-        typeTwoElement.innerText = typeTwo;
-    } else {
-        typeTwoElement.style.display = 'none';
+    for (let y = 0; y < pokemon.length; y++) {
+        const collector = pokemon[y];
+        const name = collector['name'];
+        const image = collector['sprites']['other']['dream_world']['front_default'];
+        const typeone = collector['types'][0]['type']['name'];
+        // const typetwo = collector['types'][1]['type']['name'];
+        const id = collector['id'];
+        console.log(name, image, typeone, id);
+        data.innerHTML += `
+                <div onclick="getYourPokemon(${y})" class="show_container">
+                    <h2>${name}</h2>
+                    <img src="${image}">
+                    <span id="typeone">${typeone}</span>
+                    <span id="typetwo"></span>
+                    <span id="Id">${id}</span>
+                </div>
+                `;
     }
+
+    showButton();
 }
 
-function createHtmlCard(id) {
-    return `
-        <div onclick="getYourPokemon(${id})" class="show_container">
-            <h2 id="name${id}"></h2>
-            <img id="pictures${id}">
-            <span id="typeone${id}"></span>
-            <span id="typetwo${id}"></span>
-            <span id="Id${id}"></span>
-        </div>
-    `;
-}
-
-function createHtmlButton() {
-    return `
-        <div>
-            <button onclick="init()">Load one of the best games ever exist</button>
-        </div>
-    `;
-}
-
-function showCards(cardHTML) {
-    const getplacecards = document.getElementById('load_pokemon');
-    getplacecards.innerHTML += cardHTML;
-}
-
-function showButton(cardButton) {
+function showButton() {
+    const cardButton = createHtmlButton();
     const getplacebutton = document.getElementById('load_button');
     getplacebutton.innerHTML = cardButton;
 }
 
-function singlePokemonInfo(id) {
-    const cardSINGL = createHtmlSingle(id);
-    showSingleInfo(cardSINGL);
-    document.getElementById(`single_name${id}`).innerText = getSelectName();
-    document.getElementById(`single_pictures${id}`).src = getSelectPictures();
-    document.getElementById(`single_typeone${id}`).innerText = getSelectTypeOne();
-    document.getElementById(`single_id${id}`).innerText = getSelectId();
-}
-
-function createHtmlSingle(id) {
-    // document.getElementById('poketmon_data').innerHTML 
-    return `
-        <div class="show_container">
-            <h2 id="single_name${id}"></h2>
-            <img id="single_pictures${id}">
-            <span id="single_typeone${id}"></span>
-            <span id="single_id${id}"></span>
-        </div>
-        <i onclick="closeInformationCard()" class="close" tabindex="0" role="button">close</i>
-        <div class="arrows">
-            <i onclick="left(${id})" class="myButton left"></i>
-            <i onclick="right(${id})" class="myButton right"></i>
-        </div>
-    `;
-}
-
-function showSingleInfo(cardSINGL) {
+function singleInformationCard(collector) {
     const getplacesingle = document.getElementById('poketmon_data');
-    getplacesingle.innerHTML = cardSINGL;
+    getplacesingle.innerHTML = ``;
+
+        const getsingleinformation = pokemon[collector];
+        let singlename = getsingleinformation['name'];
+        let singleimage = getsingleinformation['sprites']['other']['dream_world']['front_default'];
+        let singletype = getsingleinformation['types'][0]['type']['name'];
+        let singleid = getsingleinformation['id'];
+
+        getplacesingle.innerHTML = `
+                <div class="show_container">
+                    <h2 id="single_name">${singlename}</h2>
+                    <img src="${singleimage}">
+                    <span>${singletype}</span>
+                    <span>${singleid}</span>
+                </div>
+                <i onclick="closeInformationCard()" class="close" tabindex="0" role="button">close</i>
+                <div class="arrows">
+                    <i onclick="left(${collector})" class="myButton left"></i>
+                    <i onclick="right(${collector})" class="myButton right"></i>
+                </div>
+                `;
+    
 }
 
-function getYourPokemon(id) {
+function getYourPokemon(collector) {
     document.getElementById('one_pokemon').classList.remove('d-none');
     document.getElementById('main_card').classList.add('p-fixed');
-    singlePokemonInfo(id);
+    singleInformationCard(collector);
 }
 
 function closeInformationCard() {
@@ -131,7 +105,7 @@ function left(id) {
     else {
         id--;
     }
-    singlePokemonInfo(id);
+    singleInformationCard(id);
 }
 
 function right(id) {
@@ -141,29 +115,5 @@ function right(id) {
     else {
         id++;
     }
-    singlePokemonInfo(id);
-}
-
-function getSelectName() {
-    return responseAsJson['name'];
-}
-
-function getSelectPictures() {
-    return responseAsJson['sprites']['other']['dream_world']['front_default'];
-}
-
-function getSelectTypeOne() {
-    return responseAsJson['types'][0]['type']['name'];
-}
-
-function getSelectTypeTwo() {
-    if (responseAsJson['types'].length >= 2) {
-        return responseAsJson['types'][1]['type']['name'];
-    } else {
-        return null;
-    }
-}
-
-function getSelectId() {
-    return responseAsJson['id'];
+    singleInformationCard(id);
 }
