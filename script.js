@@ -36,13 +36,15 @@ function renderData() {
     for (let y = 0; y < pokemon.length; y++) {
         const collector = pokemon[y];
         const name = collector['name'];
-        const image = collector['sprites']['other']['dream_world']['front_default'];
+        const image = collector['sprites']['other']['official-artwork']['front_default'];
         const typeone = collector['types'][0]['type']['name'];
         // const typetwo = collector['types'][1]['type']['name'];
         const id = collector['id'];
-        console.log(name, image, typeone, id);
+
+        let inlineStyle = typeone === 'grass' ? 'background-color: green' : '';
+
         data.innerHTML += `
-                <div onclick="getYourPokemon(${y})" class="show_container">
+                <div onclick="getYourPokemon(${y})" class="show-container" style="${inlineStyle}">
                     <h2>${name}</h2>
                     <img src="${image}">
                     <span id="typeone">${typeone}</span>
@@ -65,26 +67,146 @@ function singleInformationCard(collector) {
     const getplacesingle = document.getElementById('poketmon_data');
     getplacesingle.innerHTML = ``;
 
-        const getsingleinformation = pokemon[collector];
-        let singlename = getsingleinformation['name'];
-        let singleimage = getsingleinformation['sprites']['other']['dream_world']['front_default'];
-        let singletype = getsingleinformation['types'][0]['type']['name'];
-        let singleid = getsingleinformation['id'];
+    const getsingleinformation = pokemon[collector];
+    let singlename = getsingleinformation['name'];
+    let singleimage = getsingleinformation['sprites']['other']['official-artwork']['front_default'];
+    let singletype = getsingleinformation['types'][0]['type']['name'];
+    let singleid = getsingleinformation['id'];
 
-        getplacesingle.innerHTML = `
-                <div class="show_container">
-                    <h2 id="single_name">${singlename}</h2>
-                    <img src="${singleimage}">
-                    <span>${singletype}</span>
-                    <span>${singleid}</span>
+    getplacesingle.innerHTML = `
+                <div class="single-information-container">
+                    <div class="show-top-container">
+                        <h2 id="single_name">${singlename}</h2>
+                        <img src="${singleimage}">
+                        <span>${singletype}</span>
+                        <span>${singleid}</span>
+                    </div>
+                    <div class="show-bottom-container">
+                        <div class="place-buttons">
+                            <button onclick="statsInformation(${collector})" class="information-buttons">stats</button>
+                            <button onclick="movesInformation(${collector})" class="information-buttons">moves</button>
+                            <button onclick="ingameInformation(${collector})" class="information-buttons">ingame</button>
+                            <button onclick="gamesInformation(${collector})" class="information-buttons">games</button>
+                        </div>
+                        <div class="place-information" id="informations_bottom_card">
+                        </div>
+                    </div>
+                        <div class="arrows">
+                        <i onclick="left(${collector})" class="arrow left"></i>
+                        <i onclick="right(${collector})" class="arrow right"></i>
+                    </div>
+                </div>
                 </div>
                 <i onclick="closeInformationCard()" class="close" tabindex="0" role="button">close</i>
-                <div class="arrows">
-                    <i onclick="left(${collector})" class="myButton left"></i>
-                    <i onclick="right(${collector})" class="myButton right"></i>
-                </div>
                 `;
-    
+
+    gamesInformation(collector);
+
+}
+
+function statsInformation(collector) {
+    let selectstats = document.getElementById(`informations_bottom_card`);
+
+    const getstatsinfomration = pokemon[collector];
+    let statone = getstatsinfomration['stats'][0]['base_stat'];
+    let stattwo = getstatsinfomration['stats'][1]['base_stat'];
+    let statthree = getstatsinfomration['stats'][2]['base_stat'];
+    let statfour = getstatsinfomration['stats'][3]['base_stat'];
+    let statfive = getstatsinfomration['stats'][4]['base_stat'];
+    let statsix = getstatsinfomration['stats'][5]['base_stat'];
+
+    selectstats.innerHTML = `
+        <span>hp:${statone}</span>
+        <span>attack:${stattwo}</span>
+        <span>defense:${statthree}</span>
+        <span>special-attack:${statfour}</span>
+        <span>special-defens:${statfive}</span>
+        <span>speed:${statsix}</span>   
+    `;
+}
+
+function movesInformation(collector) {
+    let selectmoves = document.getElementById(`informations_bottom_card`);
+
+    const getmovesinformation = pokemon[collector];
+    let moveone = getmovesinformation['moves']['0']['move']['name'];
+    let movetwo = getmovesinformation['moves']['1']['move']['name'];
+    let movethree = getmovesinformation['moves']['2']['move']['name'];
+    let movefour = getmovesinformation['moves']['3']['move']['name'];
+    // let movefive = getmovesinformation['moves']['4']['move']['name'];
+
+    selectmoves.innerHTML = `
+        <span>${moveone}</span>
+        <span>${movetwo}</span>
+        <span>${movethree}</span>
+        <span>${movefour}</span>
+    `;
+}
+
+function ingameInformation(collector) {
+    let selectmoves = document.getElementById(`informations_bottom_card`);
+
+    const getmovesinformation = pokemon[collector];
+    let ingame = getmovesinformation['sprites']['front_shiny'];
+    // let movefive = getmovesinformation['moves']['4']['move']['name'];
+
+    selectmoves.innerHTML = `
+        <img src="${ingame}">
+    `;
+}
+
+function gamesInformation(collector) {
+    let selectmoves = document.getElementById(`informations_bottom_card`);
+
+    const getgamesinformation = pokemon[collector];
+    let gameone = getgamesinformation['game_indices']['0']['version']['name'];
+    let gametwo = getgamesinformation['game_indices']['1']['version']['name'];
+    let gamethree = getgamesinformation['game_indices']['2']['version']['name'];
+    let gamefour = getgamesinformation['game_indices']['3']['version']['name'];
+    let gamefive = getgamesinformation['game_indices']['4']['version']['name'];
+    let gamesix = getgamesinformation['game_indices']['5']['version']['name'];
+    let gameseven = getgamesinformation['game_indices']['6']['version']['name'];
+    let gameeight = getgamesinformation['game_indices']['7']['version']['name'];
+    let gamenine = getgamesinformation['game_indices']['8']['version']['name'];
+    let gameten = getgamesinformation['game_indices']['9']['version']['name'];
+    let gameeleven = getgamesinformation['game_indices']['10']['version']['name'];
+    let gametwelve = getgamesinformation['game_indices']['11']['version']['name'];
+    let gamethirteen = getgamesinformation['game_indices']['12']['version']['name'];
+    let gamefoureen = getgamesinformation['game_indices']['13']['version']['name'];
+    let gamefiveeen = getgamesinformation['game_indices']['14']['version']['name'];
+    let gameesixteen = getgamesinformation['game_indices']['15']['version']['name'];
+    let gameseventeen = getgamesinformation['game_indices']['16']['version']['name'];
+    let gameeightteen = getgamesinformation['game_indices']['17']['version']['name'];
+    let gamenineteen = getgamesinformation['game_indices']['18']['version']['name'];
+    let gamentwenten = getgamesinformation['game_indices']['19']['version']['name'];
+
+    selectmoves.innerHTML = `
+        <div>
+            <span>${gameone}</span>
+            <span>${gametwo}</span>
+            <span>${gamethree}</span>
+            <span>${gamefour}</span>
+            <span>${gamefive}</span>
+            <span>${gamesix}</span>
+            <span>${gameseven}</span>
+            <span>${gameeight}</span>
+            <span>${gamenine}</span>
+            <span>${gameten}</span>
+        </div>
+        <div>
+            <span>${gameeleven}</span>
+            <span>${gametwelve}</span>
+            <span>${gamethirteen}</span>
+            <span>${gamefoureen}</span>
+            <span>${gamefiveeen}</span>
+            <span>${gamefiveeen}</span>
+            <span>${gameesixteen}</span>
+            <span>${gameseventeen}</span>
+            <span>${gameeightteen}</span>
+            <span>${gamenineteen}</span>
+            <span>${gamentwenten}</span>
+        </div>
+    `;
 }
 
 function getYourPokemon(collector) {
@@ -100,7 +222,7 @@ function closeInformationCard() {
 
 function left(id) {
     if (id == 0) {
-        id = firstGenPokemon.length - 1;
+        id = pokemon.length - 1;
     }
     else {
         id--;
@@ -109,7 +231,7 @@ function left(id) {
 }
 
 function right(id) {
-    if (id == firstGenPokemon.length - 1) {
+    if (id == pokemon.length - 1) {
         id = 0;
     }
     else {
