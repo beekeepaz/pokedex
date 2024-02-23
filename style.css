@@ -237,65 +237,13 @@ img {
     -webkit-transform: rotate(135deg);
 }
 
-.grass {
-    background-color: green;
-}
-
-.fire {
-    background-color: red;
-}
-
-.water {
-    background-color: blue;
-}
-
-.bug {
-    background-color: rgb(109, 109, 68);
-}
-
-.normal {
-    background-color: rgb(190, 190, 131);
-}
-
-.poisen {
-    background-color: rgb(13, 58, 13);
-}
-
-.electric {
-    background-color: yellow;
-}
-
-.ground {
-    background-color: brown;
-}
-
-.rock {
-    background-color: gray;
-}
-
-.fighting {
-    background-color: blanchedalmond;
-}
-
-.psychic {
-    background-color: rgb(94, 26, 94);
-}
-
-.ghost {
-    background-color: black;
-}
-
-.ice {
-    background-color: aliceblue;
-}
-
-.dragon {
-    background-color: crimson;
-}
-
 .p-fixed {
     position: fixed;
 }
+
+/* .green {
+    background-color: pink;
+} */
 
 .d-none {
     display: none;

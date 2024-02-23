@@ -41,10 +41,23 @@ function renderData() {
         // const typetwo = collector['types'][1]['type']['name'];
         const id = collector['id'];
 
-        let inlineStyle = typeone === 'grass' ? 'background-color: green' : '';
-
+        let backgroundstyle = typeone === 'grass' ? 'background-color: green' : ''
+            || typeone === 'fire' ? 'background-color: red' : ''
+                || typeone === 'water' ? 'background-color: blue' : ''
+                    || typeone === 'bug' ? 'background-color: rgb(109, 109, 68)' : ''
+                        || typeone === 'normal' ? 'background-color: rgb(190, 190, 131)' : ''
+                            || typeone === 'poison' ? 'background-color: rgb(16, 73, 16)' : ''
+                                || typeone === 'fairy' ? 'background-color: pink' : ''
+                                    || typeone === 'electric' ? 'background-color: yellow' : ''
+                                        || typeone === 'ground' ? 'background-color: brown' : ''
+                                            || typeone === 'rock' ? 'background-color: gray' : ''
+                                                || typeone === 'fighting' ? 'background-color: blanchedalmond' : ''
+                                                    || typeone === 'psychic' ? 'background-color: rgb(94, 26, 94)' : ''
+                                                        || typeone === 'ghost' ? 'background-color: black' : ''
+                                                            || typeone === 'ice' ? 'background-color: aliceblue' : ''
+                                                                || typeone === 'dragon' ? 'background-color: crimson' : '';
         data.innerHTML += `
-                <div onclick="getYourPokemon(${y})" class="show-container" style="${inlineStyle}">
+                <div onclick="getYourPokemon(${y})" class="show-container" style="${backgroundstyle}">
                     <h2>${name}</h2>
                     <img src="${image}">
                     <span id="typeone">${typeone}</span>
@@ -54,7 +67,75 @@ function renderData() {
                 `;
     }
 
+    showInputfield();
     showButton();
+}
+
+function showInputfield() {
+    let getplaceinput = document.getElementById('place_input');
+    getplaceinput.innerHTML = `<input id="search" placeholder="search" onchange="searchPokemon()">`;
+}
+
+function searchPokemon() {
+    let searchResults = [];
+    let searchLimit = 10;
+    let search = document.getElementById('search').value.trim().toLowerCase();
+    searchlength = search.length;
+    let searchdata = document.getElementById(`load_pokemon`);
+    searchdata.innerHTML = ``;
+
+    if (searchlength >= 3) {
+        for (let index = 0; index < pokemon.length; index++) {
+            let searchcollector = pokemon[index];
+            const name = searchcollector['name'];
+
+            if (name.toLowerCase().includes(search)) {
+                searchResults.push(pokemon);
+                if (searchResults.length >= searchLimit) {
+                    break; 
+                }
+            }
+        }
+
+        for (let index = 0; index < pokemon.length; index++) {
+            let searchcollector = pokemon[index];
+            const name = searchcollector['name'];
+            const image = searchcollector['sprites']['other']['official-artwork']['front_default'];
+            const typeone = searchcollector['types'][0]['type']['name'];
+            // const typetwo = collector['types'][1]['type']['name'];
+            const id = searchcollector['id'];
+
+            let inlineStyle = typeone === 'grass' ? 'background-color: green' : ''
+                || typeone === 'fire' ? 'background-color: red' : ''
+                    || typeone === 'water' ? 'background-color: blue' : ''
+                        || typeone === 'bug' ? 'background-color: rgb(109, 109, 68)' : ''
+                            || typeone === 'normal' ? 'background-color: rgb(190, 190, 131)' : ''
+                                || typeone === 'poison' ? 'background-color: rgb(16, 73, 16)' : ''
+                                    || typeone === 'fairy' ? 'background-color: pink' : ''
+                                        || typeone === 'electric' ? 'background-color: yellow' : ''
+                                            || typeone === 'ground' ? 'background-color: brown' : ''
+                                                || typeone === 'rock' ? 'background-color: gray' : ''
+                                                    || typeone === 'fighting' ? 'background-color: blanchedalmond' : ''
+                                                        || typeone === 'psychic' ? 'background-color: rgb(94, 26, 94)' : ''
+                                                            || typeone === 'ghost' ? 'background-color: black' : ''
+                                                                || typeone === 'ice' ? 'background-color: aliceblue' : ''
+                                                                    || typeone === 'dragon' ? 'background-color: crimson' : '';
+
+            if (searchcollector['name'].toLowerCase().includes(search)) {
+                searchdata.innerHTML += `
+             <div onclick="getYourPokemon(${index})" class="show-container" style="${inlineStyle}">
+                 <h2>${name}</h2>
+                 <img src="${image}">
+                 <span id="typeone">${typeone}</span>
+                 <span id="typetwo"></span>
+                 <span id="Id">${id}</span>
+             </div>
+            `;
+            }
+        }
+    } else {
+        renderData();
+    }
 }
 
 function showButton() {
