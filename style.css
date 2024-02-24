@@ -50,6 +50,10 @@ header {
     width: 180px;
 }
 
+.show-container:hover {
+    cursor: pointer;
+}
+
 .single-information-container {
     display: flex;
     justify-content: center;
@@ -241,17 +245,12 @@ img {
     position: fixed;
 }
 
-/* .green {
-    background-color: pink;
-} */
-
 .d-none {
     display: none;
 }
 
 ::-webkit-scrollbar {
     width: 16px;
-    /* Breite der Scrollleiste */
 }
 
 ::-webkit-scrollbar-track {
