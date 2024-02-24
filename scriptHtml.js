@@ -3,9 +3,9 @@ function allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle) {
         <div onclick="getYourPokemon(${y})" class="show-container" style="${backgroundstyle}">
             <h2>${name}</h2>
             <img src="${image}">
-            <span id="typeone">${typeone}</span>
-            <span id="typetwo">${typetwo}</span>
-            <span id="Id">${id}</span>
+            <span>${typeone}</span>
+            <span>${typetwo}</span>
+            <span>${id}</span>
         </div>
     `;
 }
