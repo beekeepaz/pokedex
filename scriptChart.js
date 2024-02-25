@@ -1,21 +1,21 @@
 function statsChart(parentId, canvasId, labels, data) {
-  const ctx = document.getElementById(canvasId);
-  new Chart(ctx, {
-      type: 'polarArea',
-      data: {
-          labels: labels,
-          datasets: [{
-              label: '# of Votes',
-              data: data,
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
-  });
+    parentId
+    const ctx = document.getElementById(canvasId);
+    new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }

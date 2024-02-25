@@ -75,7 +75,7 @@ function statsHtml() {
 function createHtmlButton() {
     return `
         <div>
-            <button onclick="init()">Load one of the best games ever exist</button>
+            <button class="original-button" onclick="init()">Load more</button>
         </div>
     `;
 }
