@@ -7,15 +7,15 @@ function statsChart(parentId, canvasId, labels, data) {
             labels: labels,
             datasets: [{
                 data: data,
-                borderWidth: 0
+                borderWidth: 0,
+                responsive: true,
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
+            y: {
+                beginAtZero: true
             }
+
         }
     });
 }

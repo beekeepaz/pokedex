@@ -17,7 +17,7 @@ function backgroundStyle(type) {
         case 'electric':
             return 'background-color: rgb(177, 177, 38)';
         case 'ground':
-            return 'background-color: brown';
+            return 'background-color: rgb(117, 52, 52)';
         case 'rock':
             return 'background-color: rgb(58, 58, 58)';
         case 'fighting':
@@ -30,6 +30,43 @@ function backgroundStyle(type) {
             return 'background-color: aliceblue';
         case 'dragon':
             return 'background-color: rgb(141, 68, 82)';
+        default:
+            return '';
+    }
+}
+
+function fontColorStyle(type) {
+    switch (type) {
+        case 'grass':
+            return 'color: rgb(255, 255, 255)';
+        case 'fire':
+            return 'color: rgb(255, 255, 255)';
+        case 'water':
+            return 'color: rgb(255, 255, 255)';
+        case 'bug':
+            return 'color: rgb(255, 255, 255)';
+        case 'normal':
+            return 'color: rgb(0, 0, 0)';
+        case 'poison':
+            return 'color: rgb(255, 255, 255)';
+        case 'fairy':
+            return 'color: rgb(0, 0, 0)';
+        case 'electric':
+            return 'color: rgb(0, 0, 0)';
+        case 'ground':
+            return 'color: rgb(255, 255, 255)';
+        case 'rock':
+            return 'color: rgb(255, 255, 255)';
+        case 'fighting':
+            return 'color: rgb(0, 0, 0)';
+        case 'psychic':
+            return 'color: rgb(255, 255, 255)';
+        case 'ghost':
+            return 'color: rgb(255, 255, 255)';
+        case 'ice':
+            return 'color: rgb(0, 0, 0)';
+        case 'dragon':
+            return 'color: rgb(255, 255, 255)';
         default:
             return '';
     }

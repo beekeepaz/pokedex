@@ -1,11 +1,11 @@
-function allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle) {
+function allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle) {
     return `
         <div onclick="getYourPokemon(${y})" class="show-container" style="${backgroundstyle}">
-            <h2>${name}</h2>
+            <h2 style="${fontcolorstyle}">${name}</h2>
             <img src="${image}">
-            <span>${typeone}</span>
-            <span>${typetwo}</span>
-            <span>${id}</span>
+            <span style="${fontcolorstyle}" class="info">${typeone}</span>
+            <span style="${fontcolorstyle}" class="info">${typetwo}</span>
+            <span style="${fontcolorstyle}" class="place-id info">Id:${id}</span>
         </div>
     `;
 }
@@ -22,23 +22,23 @@ function searchCardHtml(name, image, typeone, typetwo, id, backgroundstyle, inde
     `;
 }
 
-function singleCardHtml(collector, singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle) {
+function singleCardHtml(collector, singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle, fontcolorstyle) {
     return `
         <div class="single-information-container">
             <div class="show-top-container" style="${backgroundstyle}">
-                <h2>${singlename}</h2>
-                <img src="${singleimage}">
-                <span>${singletypeone}</span>
-                <span>${singletypetwo}</span>
-                <span>${singleid}</span>
+                <h2 style="${fontcolorstyle}">${singlename}</h2>
+                <img class="single-image" src="${singleimage}">
+                <span style="${fontcolorstyle}">${singletypeone}</span>
+                <span style="${fontcolorstyle}">${singletypetwo}</span>
+                <span style="${fontcolorstyle}">${singleid}</span>
+            </div>
+            <div class="place-buttons">
+                <button class="information-buttons" onclick="statsInformation(${collector})" class="information-buttons">stats</button>
+                <button class="information-buttons" onclick="movesInformation(${collector})" class="information-buttons">moves</button>
+                <button class="information-buttons" onclick="ingameInformation(${collector})" class="information-buttons">ingame</button>
+                <button class="information-buttons" onclick="gamesInformation(${collector})" class="information-buttons">games</button>
             </div>
             <div class="show-bottom-container">
-                <div class="place-buttons">
-                    <button onclick="statsInformation(${collector})" class="information-buttons">stats</button>
-                    <button onclick="movesInformation(${collector})" class="information-buttons">moves</button>
-                    <button onclick="ingameInformation(${collector})" class="information-buttons">ingame</button>
-                    <button onclick="gamesInformation(${collector})" class="information-buttons">games</button>
-                </div>
                 <div class="place-information" id="informations_bottom_card">
                 </div>
             </div>
@@ -53,7 +53,7 @@ function singleCardHtml(collector, singlename, singleimage, singletypeone, singl
 
 function moveHtml(moveName) {
     if (moveName) {
-        return `<span>${moveName}</span>`;
+        return `<span class="moves">${moveName}</span>`;
     } else {
         return '';
     }
@@ -61,7 +61,7 @@ function moveHtml(moveName) {
 
 function gamesHtml(gameName) {
     if (gameName) {
-        return `<span>${gameName}</span>`;
+        return `<span class="games">${gameName}</span>`;
     } else {
         return '';
     }
@@ -69,7 +69,7 @@ function gamesHtml(gameName) {
 
 function statsHtml() {
     let selectstats = document.getElementById('informations_bottom_card');
-    selectstats.innerHTML = '<div><canvas id="myChart"></canvas></div>';
+    selectstats.innerHTML = '<div class="chart-style"><canvas id="myChart"></canvas></div>';
 }
 
 function createHtmlButton() {

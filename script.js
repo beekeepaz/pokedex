@@ -38,26 +38,32 @@ function renderData() {
 
     for (let y = 0; y < pokemon.length; y++) {
         const collector = pokemon[y];
-        const { name, image, typeone, typetwo, id, backgroundstyle } = allCardInformations(collector);
-        data.innerHTML += allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle);
+        const { name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle } = allCardInformations(collector);
+        data.innerHTML += allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle);
     }
 
     showInputfield();
     showButton();
 }
 
+function allCardTypes(types) {
+    const typeone = types[0]['type']['name'];
+    let typetwo = '';
+    if (types.length > 1) {
+        typetwo = types[1]['type']['name'];
+    }
+    return { typeone, typetwo };
+}
+
 function allCardInformations(collector) {
     const name = collector['name'];
     const image = collector['sprites']['other']['official-artwork']['front_default'];
-    const typeone = collector['types'][0]['type']['name'];
-    let typetwo = '';
-    if (collector['types'].length > 1) {
-        typetwo = collector['types'][1]['type']['name'];
-    }
+    const { typeone, typetwo } = allCardTypes(collector['types']);
     const id = collector['id'];
     let backgroundstyle = backgroundStyle(typeone);
+    let fontcolorstyle = fontColorStyle(typeone);
 
-    return { name, image, typeone, typetwo, id, backgroundstyle };
+    return { name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle };
 }
 
 function showInputfield() {
@@ -103,15 +109,20 @@ function renderSearchResults(searchresults, searchdata) {
 function searchCardInformation(searchcollector, index) {
     const name = searchcollector['name'];
     const image = searchcollector['sprites']['other']['official-artwork']['front_default'];
+    const { typeone, typetwo } = searchCardTypes(searchcollector);
+    const id = searchcollector['id'];
+    const backgroundstyle = backgroundStyle(typeone);
+
+    return { name, image, typeone, typetwo, id, backgroundstyle, index };
+}
+
+function searchCardTypes(searchcollector) {
     const typeone = searchcollector['types'][0]['type']['name'];
     let typetwo = '';
     if (searchcollector['types'].length > 1) {
         typetwo = searchcollector['types'][1]['type']['name'];
     }
-    const id = searchcollector['id'];
-    const backgroundstyle = backgroundStyle(typeone);
-
-    return { name, image, typeone, typetwo, id, backgroundstyle, index };
+    return { typeone, typetwo };
 }
 
 function showButton() {
@@ -124,22 +135,28 @@ function informationCard(collector) {
     const getplacesingle = document.getElementById('poketmon_data');
     getplacesingle.innerHTML = ``;
     const getsingleinformation = pokemon[collector];
-    const { singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle } = singleCardInformation(getsingleinformation);
-    getplacesingle.innerHTML = singleCardHtml(collector, singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle);
+    const { singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle, fontcolorstyle } = singleCardInformation(getsingleinformation);
+    getplacesingle.innerHTML = singleCardHtml(collector, singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle, fontcolorstyle);
     statsInformation(collector);
 }
 
 function singleCardInformation(getsingleinformation) {
     let singlename = getsingleinformation['name'];
     let singleimage = getsingleinformation['sprites']['other']['official-artwork']['front_default'];
-    let singletypeone = getsingleinformation['types'][0]['type']['name'];
-    let singletypetwo = ``;
-    if (getsingleinformation['types'].length > 1) {
-        singletypetwo = getsingleinformation['types'][1]['type']['name'];
-    }
+    let { singletypeone, singletypetwo } = singleTypes(getsingleinformation['types']);
     let singleid = getsingleinformation['id'];
     let backgroundstyle = backgroundStyle(singletypeone);
-    return { singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle };
+    let fontcolorstyle = fontColorStyle(singletypeone);
+    return { singlename, singleimage, singletypeone, singletypetwo, singleid, backgroundstyle, fontcolorstyle };
+}
+
+function singleTypes(typesArray) {
+    let singletypeone = typesArray[0]['type']['name'];
+    let singletypetwo = ``;
+    if (typesArray.length > 1) {
+        singletypetwo = typesArray[1]['type']['name'];
+    }
+    return { singletypeone, singletypetwo };
 }
 
 function statsInformation(collector) {
