@@ -1,34 +1,45 @@
-const firstGenPokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie', 'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey', 'pidgeotto', 'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu', 'sandshrew', 'sandslash', 'nidoran-f', 'nidorina', 'nidoqueen', 'nidoran-m', 'nidorino', 'nidoking', 'clefairy', 'clefable', 'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish', 'gloom', 'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth', 'persian', 'psyduck', 'golduck', 'mankey', 'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl', 'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp', 'bellsprout', 'weepinbell', 'victreebel', 'tentacool', 'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash', 'slowpoke', 'slowbro', 'magnemite', 'magneton', 'farfetchd', 'doduo', 'dodrio', 'seel', 'dewgong', 'grimer', 'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno', 'krabby', 'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak', 'hitmonlee', 'hitmonchan', 'lickitung', 'koffing', 'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan', 'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie', 'mr-mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir', 'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee', 'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl', 'snorlax', 'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew'];
+let initpokemon = [];
 let pokemon = [];
 let searchresults = [];
 let results = [];
 let searchLimit = 10;
-let currentindex = 0;
+let nullpoint = 0;
+
+async function initLoadPokemon() {
+    const limit = 500;
+
+    for (let offset = 0; pokemon.length < limit; offset += limit) {
+        const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        await pushArrayPokemon(data.results);
+    }
+
+    if (pokemon.length >= 50) {
+        init();
+    }
+}
+
+async function pushArrayPokemon(results) {
+    for (let z = 0; z < results.length; z++) {
+        const result = results[z];
+        const pokemonResponse = await fetch(result.url);
+        const pokemonData = await pokemonResponse.json();
+        pokemon.push(pokemonData);
+    }
+}
 
 async function init() {
-    await collectAll();
-}
+    const batchSize = 20;
+    const endIndex = Math.min(pokemon.length - nullpoint, batchSize);
 
-async function collectAll() {
-    const maxpokemoncount = Math.min(firstGenPokemon.length - currentindex, 20);
-    if (maxpokemoncount <= 0) {
-        alert("Thats All");
-        return;
+    for (let u = 0; u < endIndex; u++) {
+        const getpokemon = pokemon[nullpoint + u];
+        initpokemon.push(getpokemon);
     }
 
-    for (let u = 0; u < maxpokemoncount; u++) {
-        const getnamepokemon = firstGenPokemon[currentindex + u];
-        await getPokemonApi(getnamepokemon);
-    }
-
-    currentindex += maxpokemoncount;    
-}
-
-async function getPokemonApi(getname) {
-    let url = `https://pokeapi.co/api/v2/pokemon/${getname}`;
-    let response = await fetch(url);
-    let responseAsJson = await response.json();
-    pokemon.push(responseAsJson);
+    nullpoint += endIndex;
     renderData();
 }
 
@@ -36,8 +47,8 @@ function renderData() {
     let data = document.getElementById(`load_pokemon`);
     data.innerHTML = ``;
 
-    for (let y = 0; y < pokemon.length; y++) {
-        const collector = pokemon[y];
+    for (let y = 0; y < initpokemon.length; y++) {
+        const collector = initpokemon[y];
         const { name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle } = allCardInformations(collector);
         data.innerHTML += allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle);
     }
@@ -233,7 +244,7 @@ function closeInformationCard() {
 
 function left(collector) {
     if (collector == 0) {
-        collector = pokemon.length - 1;
+        collector = initpokemon.length - 1;
     }
     else {
         collector--;
@@ -242,7 +253,7 @@ function left(collector) {
 }
 
 function right(collector) {
-    if (collector == pokemon.length - 1) {
+    if (collector == initpokemon.length - 1) {
         collector = 0;
     }
     else {

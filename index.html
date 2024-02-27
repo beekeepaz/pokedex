@@ -9,13 +9,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="initLoadPokemon()">
     <header id="header">
         <div id="place_input"></div>
     </header>
 
     <section id='main_card' class="main-card">
-        <div id='load_pokemon'></div>
+        <div id='load_pokemon'>
+            <div id="progress-bar"></div>
+        </div>
         <div id='load_button'></div>
     </section>
 
