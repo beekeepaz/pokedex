@@ -219,6 +219,7 @@ function getYourPokemon(collector) {
     document.getElementById('footer').classList.add('d-none');
     document.getElementById('header').classList.add('d-none');
     document.getElementById('main_card').classList.add('p-fixed');
+    document.getElementById('load_button').classList.add('d-none');
     informationCard(collector);
 }
 
@@ -227,6 +228,7 @@ function closeInformationCard() {
     document.getElementById('main_card').classList.remove('p-fixed');
     document.getElementById('footer').classList.remove('d-none');
     document.getElementById('header').classList.remove('d-none');
+    document.getElementById('load_button').classList.remove('d-none');
 }
 
 function left(collector) {
