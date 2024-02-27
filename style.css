@@ -43,6 +43,14 @@ footer {
     margin-right: 16px;
 }
 
+h2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 a {
     text-decoration: none;
     color: rgb(179, 145, 53);
@@ -105,6 +113,11 @@ a:hover {
 
 .place-id {
     margin-left: 32px;
+}
+
+.info {
+    margin-left: 16px;
+    margin-bottom: 8px;
 }
 
 .single-information-container {

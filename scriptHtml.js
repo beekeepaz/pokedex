@@ -5,19 +5,19 @@ function allCardHtml(y, name, image, typeone, typetwo, id, backgroundstyle, font
             <img src="${image}">
             <span style="${fontcolorstyle}" class="info">${typeone}</span>
             <span style="${fontcolorstyle}" class="info">${typetwo}</span>
-            <span style="${fontcolorstyle}" class="place-id info">Id:${id}</span>
+            <span style="${fontcolorstyle}" class="place-id info">${id}</span>
         </div>
     `;
 }
 
-function searchCardHtml(name, image, typeone, typetwo, id, backgroundstyle, index) {
+function searchCardHtml(name, image, typeone, typetwo, id, backgroundstyle) {
     return `
-        <div onclick="getYourPokemon(${index})" class="show-container" style="${backgroundstyle}">
+        <div onclick="getYourPokemon(${id-1})" class="show-container" style="${backgroundstyle}">
             <h2>${name}</h2>
+            <span>${id}</span>
             <img src="${image}">
             <span>${typeone}</span>
             <span>${typetwo}</span>
-            <span>${id}</span>
         </div>
     `;
 }

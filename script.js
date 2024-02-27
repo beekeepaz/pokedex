@@ -7,15 +7,30 @@ let nullpoint = 0;
 
 async function initLoadPokemon() {
     const limit = 500;
+    let five = document.getElementById(`load_pokemon`);
 
     for (let offset = 0; pokemon.length < limit; offset += limit) {
-        const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
-        const response = await fetch(url);
-        const data = await response.json();
-
+        const data = await fetchData(offset, limit);
+        displayLoadingIfNeeded(five);
         await pushArrayPokemon(data.results);
     }
 
+    executeInitIfNeeded();
+}
+
+async function fetchData(offset, limit) {
+    const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
+    const response = await fetch(url);
+    return response.json();
+}
+
+function displayLoadingIfNeeded(element) {
+    if (pokemon.length <= 50) {
+        element.innerHTML = `<h1>Loading...</h1>`;
+    }
+}
+
+function executeInitIfNeeded() {
     if (pokemon.length >= 50) {
         init();
     }
@@ -31,8 +46,7 @@ async function pushArrayPokemon(results) {
 }
 
 async function init() {
-    const batchSize = 20;
-    const endIndex = Math.min(pokemon.length - nullpoint, batchSize);
+    const endIndex = Math.min(pokemon.length - nullpoint, 20);
 
     for (let u = 0; u < endIndex; u++) {
         const getpokemon = pokemon[nullpoint + u];
@@ -79,10 +93,12 @@ function allCardInformations(collector) {
 
 function showInputfield() {
     let getplaceinput = document.getElementById('place_input');
-    getplaceinput.innerHTML = `<input id="search" placeholder="search" onchange="searchPokemon()">`;
+    getplaceinput.innerHTML = `<input id="search" placeholder="search" oninput="searchPokemon()">`;
 }
 
 function searchPokemon() {
+    const getplacebutton = document.getElementById('load_button');
+    getplacebutton.innerHTML = ``;
     let search = document.getElementById('search').value.trim().toLowerCase();
     searchlength = search.length;
     let searchdata = document.getElementById(`load_pokemon`);
@@ -92,6 +108,10 @@ function searchPokemon() {
         searchresults = searchFilter(search);
         renderSearchResults(searchresults, searchdata);
     } 
+
+    if (searchlength <= 0) {
+        renderData();
+    }
 }
 
 function searchFilter(search) {
@@ -190,7 +210,7 @@ function movesInformation(collector) {
     const getmoves = pokemon[collector];
     let moves = '';
 
-    for (let m = 0; m < 7; m++) {
+    for (let m = 0; m < 10; m++) {
         if (getmoves['moves'][m]) {
             moves += moveHtml(getmoves['moves'][m]['move']['name']);
         }
