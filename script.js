@@ -6,7 +6,7 @@ let searchLimit = 10;
 let nullpoint = 0;
 
 async function initLoadPokemon() {
-    const limit = 500;
+    const limit = 1000;
     let five = document.getElementById(`load_pokemon`);
 
     for (let offset = 0; pokemon.length < limit; offset += limit) {
@@ -25,8 +25,8 @@ async function fetchData(offset, limit) {
 }
 
 function displayLoadingIfNeeded(element) {
-    if (pokemon.length <= 50) {
-        element.innerHTML = `<h1>Loading...</h1>`;
+    if (pokemon.length <= 200) {
+        displayLoadingHtml(element);
     }
 }
 
@@ -93,8 +93,8 @@ function allCardInformations(collector) {
 
 function showInputfield() {
     let getplaceinput = document.getElementById('place_input');
-    getplaceinput.innerHTML = `<input id="search" placeholder="search" oninput="searchPokemon()">`;
-}
+    showInputHtml(getplaceinput);
+}      
 
 function searchPokemon() {
     const getplacebutton = document.getElementById('load_button');
@@ -132,8 +132,8 @@ function searchFilter(search) {
 function renderSearchResults(searchresults, searchdata) {
     for (let r = 0; r < searchresults.length; r++) {
         let searchcollector = searchresults[r];
-        const { name, image, typeone, typetwo, id, backgroundstyle } = searchCardInformation(searchcollector, r);
-        searchdata.innerHTML += searchCardHtml(name, image, typeone, typetwo, id, backgroundstyle, r);
+        const { fontcolorstyle, name, image, typeone, typetwo, id, backgroundstyle } = searchCardInformation(searchcollector, r);
+        searchdata.innerHTML += searchCardHtml(fontcolorstyle, name, image, typeone, typetwo, id, backgroundstyle, r);
     }
 }
 
@@ -143,8 +143,9 @@ function searchCardInformation(searchcollector, index) {
     const { typeone, typetwo } = searchCardTypes(searchcollector);
     const id = searchcollector['id'];
     const backgroundstyle = backgroundStyle(typeone);
+    let fontcolorstyle = fontColorStyle(typeone);
 
-    return { name, image, typeone, typetwo, id, backgroundstyle, index };
+    return { fontcolorstyle, name, image, typeone, typetwo, id, backgroundstyle, index };
 }
 
 function searchCardTypes(searchcollector) {
@@ -200,7 +201,6 @@ function statsInformation(collector) {
     }
 
     statsHtml();
-
     statsChart('informations_bottom_card', 'myChart', statLabels, statsValues);
 }
 
@@ -225,9 +225,7 @@ function ingameInformation(collector) {
     const getmoves = pokemon[collector];
     let ingame = getmoves['sprites']['front_shiny'];
 
-    selectmoves.innerHTML = `
-        <img src="${ingame}">
-    `;
+    ingameImage(selectmoves, ingame);
 }
 
 function gamesInformation(collector) {
@@ -280,4 +278,24 @@ function right(collector) {
         collector++;
     }
     informationCard(collector);
+}
+
+function showImpressum() {
+    const cardimpressum = createHtmlImpressum();
+    const getplaceimpressum = document.getElementById('main_card');
+    const getplaceinput = document.getElementById('place_input');
+    getplaceimpressum.innerHTML = cardimpressum;
+    getplaceinput.innerHTML = createImpressumHtml();
+}
+
+function showDatenschutz() {
+    const cardDatenschutz = createHtmlDatenschutz();
+    const getplaceDatenschutz = document.getElementById('main_card');
+    const getplaceInput = document.getElementById('place_input');
+    getplaceDatenschutz.innerHTML = cardDatenschutz;
+    getplaceInput.innerHTML = createDatenschutzHtml();
+}
+
+function reLoad() {
+    location.reload();
 }

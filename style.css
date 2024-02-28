@@ -10,7 +10,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     border-bottom: 1px solid;
     border-color: rgb(179, 145, 53);
     background-color: rgb(48, 17, 17);
@@ -20,6 +19,26 @@ header {
     width: 100%;
     top: 0;
     position: sticky;
+}
+
+.place-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    padding-left: 64px;
+    padding-right: 64px;
+}
+
+.logo-pokedex {
+    width: 128px;
+    height: 48px;
+    padding-left: 64px;
+    padding-right: 64px;
 }
 
 footer {
@@ -96,8 +115,9 @@ a:hover {
 .show-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     margin: 16px;
     padding: 8px;
     background-color: rgb(190, 190, 131);
@@ -108,7 +128,27 @@ a:hover {
 
 .show-container:hover {
     cursor: pointer;
-    box-shadow: 8px;
+    box-shadow: 0px 0px 8px 8px rgb(179, 145, 53);
+}
+
+.allcard-image-place {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.allcard-types-place {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.allcard-id-place {
+    width: 100%;
+}
+
+.single-header {
+    margin-top: 8px;
+    font-size: 48px;
 }
 
 .place-id {
@@ -116,8 +156,18 @@ a:hover {
 }
 
 .info {
-    margin-left: 16px;
-    margin-bottom: 8px;
+    margin-left: 28px;
+}
+
+.single-info {
+    font-size: 32px;
+    margin: 16px;
+}
+
+.type-position {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .single-information-container {
@@ -134,13 +184,14 @@ a:hover {
 .single-image {
     width: 300px;
     height: 300px;
+    padding-bottom: 32px;
 }
 
 .show-top-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     background-color: rgb(190, 190, 131);
     border-radius: 16px;
     margin-bottom: -32px;
@@ -288,6 +339,11 @@ img {
     height: 128px;
 }
 
+.ingame-image {
+    width: 400px;
+    height: 400px;
+}
+
 .information-card {
     display: flex;
     justify-content: center;
@@ -370,7 +426,7 @@ img {
 
 .close:hover {
     cursor: pointer;
-    filter: invert(20%);
+    filter: invert(70%);
     color: black;
 }
 
@@ -397,6 +453,37 @@ img {
 
 .d-none {
     display: none;
+}
+
+.color-btn{
+    background-color: rgb(48, 17, 17);
+}
+
+.place-loading-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-image {
+    width: 300px;
+}
+
+.impressum {
+    margin-left: 32px;
+    margin-right: 32px;
+}
+
+.place-impressum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.impressum-header {
+    padding-right: 32px;
 }
 
 ::-webkit-scrollbar {
@@ -463,6 +550,23 @@ img {
         width: 200px;
         height: 200px;
     }
+
+    .single-header {
+        font-size: 38px;
+    }
+
+    .single-info {
+        font-size: 24px;
+        margin: 6px;
+    }
+
+    .show-top-container {
+        justify-content: center;
+    }
+
+    .logo {
+        display: none;
+    }
 }
 
 @media(max-width: 730px) {
@@ -499,6 +603,15 @@ img {
     .information-buttons {
         width: 80px;
         height: 42px;
+    }
+
+    .logo-pokedex {
+        padding-left: 0px;
+    }
+
+    .ingame-image {
+        width: 300px;
+        height: 300px;
     }
 }
 
@@ -542,5 +655,17 @@ img {
         font-size: 16px;
         width: 66px;
         height: 44px;
+    }
+
+    .single-info {
+        margin: 3px;
+    }
+
+    .logo-pokedex {
+        display: none;
+    }
+
+    .impressum-header {
+        display: none;
     }
 }
