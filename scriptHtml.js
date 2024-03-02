@@ -90,7 +90,7 @@ function displayLoadingHtml(element) {
     element.innerHTML = `
         <div class="place-loading-screen">
             <h1>Loading...</h1>
-            <img class="loading-image" src="/img/Pokedex.png">
+            <img class="loading-image" src="./img/Pokedex.png">
         </div>
     `;
 }
@@ -98,9 +98,9 @@ function displayLoadingHtml(element) {
 function showInputHtml(getplaceinput) {
     getplaceinput.innerHTML = `
         <div class="place-head">
-            <img class="logo-pokedex" src="/img/Pokedex.png">
+            <img class="logo-pokedex" src="./img/Pokedex.png">
             <input id="search" placeholder="search" oninput="searchPokemon()">
-            <img class="logo" src="/img/poceball.png">
+            <img class="logo" src="./img/poceball.png">
         </div>
     `;
 }

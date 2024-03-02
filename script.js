@@ -4,6 +4,7 @@ let searchresults = [];
 let results = [];
 let searchLimit = 10;
 let nullpoint = 0;
+let checklength = false;
 
 async function initLoadPokemon() {
     const limit = 1000;
@@ -14,8 +15,6 @@ async function initLoadPokemon() {
         displayLoadingIfNeeded(five);
         await pushArrayPokemon(data.results);
     }
-
-    executeInitIfNeeded();
 }
 
 async function fetchData(offset, limit) {
@@ -25,14 +24,15 @@ async function fetchData(offset, limit) {
 }
 
 function displayLoadingIfNeeded(element) {
-    if (pokemon.length <= 200) {
+    if (pokemon.length <= 50) {
         displayLoadingHtml(element);
     }
 }
 
 function executeInitIfNeeded() {
-    if (pokemon.length >= 50) {
+    if (pokemon.length >= 50 && !checklength) {
         init();
+        checklength = true;
     }
 }
 
@@ -41,6 +41,7 @@ async function pushArrayPokemon(results) {
         const result = results[z];
         const pokemonResponse = await fetch(result.url);
         const pokemonData = await pokemonResponse.json();
+        executeInitIfNeeded();
         pokemon.push(pokemonData);
     }
 }
@@ -87,28 +88,34 @@ function allCardInformations(collector) {
     const id = collector['id'];
     let backgroundstyle = backgroundStyle(typeone);
     let fontcolorstyle = fontColorStyle(typeone);
-
     return { name, image, typeone, typetwo, id, backgroundstyle, fontcolorstyle };
 }
 
 function showInputfield() {
     let getplaceinput = document.getElementById('place_input');
     showInputHtml(getplaceinput);
-}      
+}
 
 function searchPokemon() {
     const getplacebutton = document.getElementById('load_button');
     getplacebutton.innerHTML = ``;
     let search = document.getElementById('search').value.trim().toLowerCase();
-    searchlength = search.length;
+    const searchlength = search.length;
     let searchdata = document.getElementById(`load_pokemon`);
     searchdata.innerHTML = ``;
 
-    if (searchlength >= 3) {
-        searchresults = searchFilter(search);
-        renderSearchResults(searchresults, searchdata);
-    } 
+    searchMax(searchlength, search, searchdata);
+    searchMin(searchlength);
+}
 
+function searchMax(searchlength, search, searchdata) {
+    if (searchlength >= 3) {
+        const searchresults = searchFilter(search);
+        renderSearchResults(searchresults, searchdata);
+    }
+}
+
+function searchMin(searchlength) {
     if (searchlength <= 0) {
         renderData();
     }
@@ -116,6 +123,7 @@ function searchPokemon() {
 
 function searchFilter(search) {
     let results = [];
+
     for (let index = 0; index < pokemon.length; index++) {
         let searchcollector = pokemon[index];
         const name = searchcollector['name'];
@@ -144,13 +152,13 @@ function searchCardInformation(searchcollector, index) {
     const id = searchcollector['id'];
     const backgroundstyle = backgroundStyle(typeone);
     let fontcolorstyle = fontColorStyle(typeone);
-
     return { fontcolorstyle, name, image, typeone, typetwo, id, backgroundstyle, index };
 }
 
 function searchCardTypes(searchcollector) {
     const typeone = searchcollector['types'][0]['type']['name'];
     let typetwo = '';
+
     if (searchcollector['types'].length > 1) {
         typetwo = searchcollector['types'][1]['type']['name'];
     }
@@ -199,14 +207,12 @@ function statsInformation(collector) {
     for (let s = 0; s < 6; s++) {
         statsValues.push(getstatsinfomration['stats'][s]['base_stat']);
     }
-
     statsHtml();
     statsChart('informations_bottom_card', 'myChart', statLabels, statsValues);
 }
 
 function movesInformation(collector) {
     let movespot = document.getElementById(`informations_bottom_card`);
-
     const getmoves = pokemon[collector];
     let moves = '';
 
@@ -215,22 +221,18 @@ function movesInformation(collector) {
             moves += moveHtml(getmoves['moves'][m]['move']['name']);
         }
     }
-
     movespot.innerHTML = moves;
 }
 
 function ingameInformation(collector) {
     let selectmoves = document.getElementById(`informations_bottom_card`);
-
     const getmoves = pokemon[collector];
     let ingame = getmoves['sprites']['front_shiny'];
-
     ingameImage(selectmoves, ingame);
 }
 
 function gamesInformation(collector) {
     let selectgamespot = document.getElementById(`informations_bottom_card`);
-
     const getgames = pokemon[collector];
     let games = '';
 
@@ -239,7 +241,6 @@ function gamesInformation(collector) {
             games += gamesHtml(getgames['game_indices'][g]['version']['name']);
         }
     }
-
     selectgamespot.innerHTML = games;
 }
 
